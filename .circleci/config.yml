@@ -24,3 +24,16 @@ jobs:
       # specify any bash command here prefixed with `run: `
       - run: go get -v -t -d ./...
       - run: go test -v ./...
+      - run:
+          name: "Run coverage tests"
+          environment:
+            CODECOV_TOKEN="58376bcd-a7c2-4c69-9063-bfbabd9d8412"
+          command: |
+            export GOPATH=/go
+            make cover
+            mkdir -p /tmp/coverage_reports
+            cp coverage_report.txt /tmp/coverage_reports/
+            cp coverage_report.html /tmp/coverage_reports/
+            bash <(curl -s https://codecov.io/bash)
+            - store_artifacts:
+                path: /tmp/coverage_reports
