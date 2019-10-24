@@ -26,8 +26,6 @@ jobs:
       - run: go test -v ./...
       - run:
           name: "Run coverage tests"
-          environment:
-            CODECOV_TOKEN=58376bcd-a7c2-4c69-9063-bfbabd9d8412
           command: |
             export GOPATH=/go
             make cover
