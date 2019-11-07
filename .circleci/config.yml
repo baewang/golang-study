@@ -22,17 +22,20 @@ jobs:
           name: "Test1. Compile"
           command: |
             go build -o /dev/null
+
       - run:
           name: "Test2. UnitTest"
           command: |
             mkdir -p reports/junit
             go get -u github.com/jstemmer/go-junit-report
             go test ./... -v 2>&1 | go-junit-report > reports/junit/report.xml
+
       - run:
           name: "Test3. Coverage"
           command: |
             mkdir -p reports/coverage
             go test ./... -race -covermode=atomic -coverprofile=reports/coverage/coverage.txt
+
       - save_cache: # Store cache in the /go/pkg directory
           key: v1-pkg-cache
           paths:
